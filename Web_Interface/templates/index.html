@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SalesVision AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="font-inter bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50 overflow-x-hidden">
+    <!-- Floating Particles -->
+    <div id="particles" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <!-- Header -->
+    <header class="glass-header relative z-10">
+        <div class="container mx-auto px-6 py-6 flex justify-between items-center">
+            <h1 class="logo animate-pulse-slow">
+                SALES<span class="text-gradient">VISION</span> AI
+            </h1>
+            <div class="status-badge animate-pulse ml-4">
+                <span class="status-dot"></span>
+                ML_ENGINE_CONNECTED
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 pb-16 pt-12 relative z-10">
+        <!-- Hero Subtitle -->
+        <div class="hero-subtitle text-center mb-20 fade-in-up">
+            <h2 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+                AI-Powered Sales Prediction
+            </h2>
+            <p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                Enter product parameters to get instant ML-driven viability predictions
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+            
+            <!-- FORM -->
+            <div class="glass-card form-card slide-in-left p-8">
+                <div class="icon-wrapper mb-8">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                </div>
+                <h2 class="section-title mb-8">Product Parameters</h2>
+                
+                <form id="salesForm" class="space-y-6">
+                    <div class="form-group">
+                        <label class="form-label">Price ($)</label>
+                        <input name='price' type="number" id="price" class="form-input" placeholder="Enter MRP" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select name='category' id="category" class="form-input" required>
+                            {% for item in categ %}
+                                <option value="{{item}}">{{item}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Region</label>
+                        <select name='region' id="region" class="form-input" required>
+                            {% for item in reg %}
+                                <option value="{{item}}">{{item}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Expected Units to be Sold</label>
+                        <input name='sold_units' type="number" id="units" class="form-input" placeholder="0-5" min="0" max="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Discount (%)</label>
+                        <input name='discount' type="number" id="discount" class="form-input" placeholder="0-100" min="0" max="100" required>
+                    </div>
+                    <button type="submit" class="submit-btn lift-hover" id="submitBtn">
+                        <span class="btn-text">🔮 Predict Viability</span>
+                        <div class="btn-loader hidden">
+                            <svg class="animate-spin w-5 h-5" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                            </svg>
+                        </div>
+                    </button>
+                </form>
+            </div>
+
+            <!-- RESULT -->
+            <div class="glass-card result-card slide-in-right p-8">
+                <div class="icon-wrapper mb-8">
+                    <svg class="result-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                </div>
+                <h2 class="section-title mb-6">Prediction Results</h2>
+                
+                <div class="result-display">
+                    <h3 id="resultStatus" class="result-status">---</h3>
+                    <p id="resultMessage" class="result-message text-slate-500">
+                        Submit form to get instant ML predictions
+                    </p>
+                    <div class="confidence-bar mt-8">
+                        <div id="confidenceFill" class="confidence-fill"></div>
+                    </div>
+                    <p id="confidenceText" class="confidence-text mt-4">Model Confidence: --%</p>
+                    <div id="salesPrediction" class="sales-prediction mt-6 hidden">
+                        <div class="prediction-label">Expected Sales:</div>
+                        <div class="prediction-value">{{reg_res}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

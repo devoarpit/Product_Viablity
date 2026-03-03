@@ -1,0 +1,143 @@
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --success-gradient: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+    --error-gradient: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+    --glass-bg: rgba(255, 255, 255, 0.25);
+    --glass-border: rgba(255, 255, 255, 0.18);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.15);
+    --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes float { 0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)} }
+@keyframes pulse-slow { 0%,100%{opacity:1}50%{opacity:0.7} }
+@keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(16,185,129,0.7)}70%{box-shadow:0 0 0 10px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)} }
+@keyframes shake { 0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)} }
+
+.fade-in-up, .hero-subtitle { animation: fadeInUp 0.8s ease-out forwards; }
+.slide-in-left { animation: slideInLeft 0.8s ease-out 0.2s forwards; }
+.slide-in-right { animation: slideInRight 0.8s ease-out 0.4s forwards; }
+.animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
+.lift-hover:hover { transform: translateY(-4px) !important; transition: all 0.3s ease; }
+
+.glass-header, .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: 24px;
+}
+.glass-header { border-radius: 0 0 24px 24px; }
+
+.logo { font-size: 2rem; font-weight: 900; }
+.text-gradient { background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.section-title { font-size: 1.5rem; font-weight: 800; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+.status-badge {
+    background: rgba(102, 126, 234, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-family: 'Courier New', monospace;
+    border: 1px solid rgba(102, 126, 234, 0.3);
+}
+.status-dot {
+    display: inline-block; width: 8px; height: 8px; 
+    background: #10b981; border-radius: 50%; 
+    margin-right: 6px; animation: pulse 2s infinite;
+}
+
+.form-group { position: relative; }
+.form-label {
+    display: block; font-size: 13px; font-weight: 600; 
+    margin-bottom: 8px; color: #64748b; 
+    text-transform: uppercase; letter-spacing: 0.5px;
+}
+.form-input {
+    width: 100%; padding: 16px 20px; border: 2px solid transparent; 
+    border-radius: 16px; background: rgba(255,255,255,0.9); 
+    backdrop-filter: blur(10px); font-size: 16px; 
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1); 
+    box-shadow: var(--shadow-sm);
+}
+.form-input:focus {
+    outline: none; border-color: #667eea; 
+    box-shadow: 0 0 0 4px rgba(102,126,234,0.1); 
+    transform: translateY(-2px);
+}
+
+.submit-btn {
+    width: 100%; padding: 18px; background: var(--primary-gradient); 
+    color: white; font-weight: 700; font-size: 16px; 
+    border-radius: 20px; border: none; cursor: pointer; 
+    position: relative; overflow: hidden; 
+    transition: all 0.4s cubic-bezier(0.4,0,0.2,1); 
+    box-shadow: var(--shadow-lg);
+}
+.submit-btn:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(102,126,234,0.4); }
+.submit-btn:active { transform: translateY(-1px); }
+.btn-loader { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.btn-text.hidden, .btn-loader:not(.hidden) ~ .btn-text { opacity: 0; }
+.btn-loader:not(.hidden) { opacity: 1; }
+
+.result-status {
+    font-size: 3rem; font-weight: 900; margin-bottom: 1rem; 
+    min-height: 4rem; display: flex; align-items: center; 
+    justify-content: center; transition: all 0.5s ease;
+}
+.result-status.success { 
+    background: var(--success-gradient); 
+    -webkit-background-clip: text; background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    animation: pulse-slow 2s infinite;
+}
+.result-status.error { 
+    background: var(--error-gradient); 
+    -webkit-background-clip: text; background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    animation: shake 0.5s ease-in-out;
+}
+.confidence-bar {
+    width: 100%; height: 12px; background: rgba(0,0,0,0.1); 
+    border-radius: 10px; overflow: hidden;
+}
+.confidence-fill {
+    height: 100%; width: 0%; border-radius: 10px; 
+    transition: width 1.5s ease-out, background 0.3s ease;
+}
+.confidence-text { font-size: 14px; font-weight: 600; color: #64748b; }
+
+.form-card, .result-card { min-height: 580px; }
+.icon-wrapper {
+    width: 80px; height: 80px; background: var(--primary-gradient); 
+    border-radius: 20px; display: flex; align-items: center; 
+    justify-content: center; margin: 0 auto 2rem; 
+    box-shadow: var(--shadow-lg);
+}
+.input-icon, .result-icon { width: 36px; height: 36px; color: white; }
+
+#particles .particle {
+    position: absolute; width: 4px; height: 4px; 
+    background: rgba(102,126,234,0.5); border-radius: 50%; 
+    animation: float 20s infinite linear;
+}
+
+.sales-prediction {
+    background: rgba(255,255,255,0.5);
+    padding: 1rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-gradient);
+}
+.prediction-label { font-size: 14px; color: #64748b; margin-bottom: 4px; }
+.prediction-value { font-size: 2rem; font-weight: 800; color: #1e293b; }
+
+@media (max-width: 768px) {
+    .form-card, .result-card { min-height: auto; padding: 2rem !important; }
+    .result-status { font-size: 2rem; }
+    .logo { font-size: 1.5rem; }
+}
